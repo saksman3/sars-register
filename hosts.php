@@ -1,4 +1,15 @@
 <?php
+   $dbhost = "localhost";
+   $dbport = "3306";
+   $dbname = "dredger";
+   $dbuser = "root";
+   $dbpasswd = "";
+   // $conn = new mysqli("localhost","root","","dredger");
+   $conn = new mysqli($dbhost,$dbuser,$dbpasswd,$dbname);
+   if($conn->connect_error)
+   {
+	   echo" an error occured!";
+   }
 
 class hosts
 {
@@ -17,15 +28,17 @@ class hosts
                 }
 
 		echo "\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t<th class='hosts'>\n\t\t\t\t\t\t\t\t<a href='index.php?option=servers&sort=HostName'>Host Name</a>\n\t\t\t\t\t\t\t</th>\n\t\t\t\t\t\t\t<th class='hosts'>\n\t\t\t\t\t\t\t\t<a href='index.php?option=servers&sort=IPAddress'>Host IP</a>\n\t\t\t\t\t\t\t</th>\n\t\t\t\t\t\t\t<th class='hosts'>\n\t\t\t\t\t\t\t\t<a href='index.php?option=servers&sort=contacts.FullName,HostName'>System Owner</a>\n\t\t\t\t\t\t\t</th>\n\t\t\t\t\t\t\t<th class='hosts'>\n\t\t\t\t\t\t\t\t<a href='index.php?option=servers&sort=locations.LocName,HostName'>Location</a>\n\t\t\t\t\t\t\t</th>\n\t\t\t\t\t\t\t<th class='hosts'>\n\t\t\t\t\t\t\t\t<a href='index.php?option=servers&sort=environments.EnvName,HostName'>Environment</a>\n\t\t\t\t\t\t\t</th>\n\t\t\t\t\t\t\t<th class='hosts'>\n\t\t\t\t\t\t\t\t<a href='index.php?option=servers&sort=status.FullName,HostName'>Status</a>\n\t\t\t\t\t\t\t</th>\n\t\t\t\t\t\t\t<th class='hosts'>\n\t\t\t\t\t\t\t\t<a href='index.php?option=servers&sort=oses.OSName,HostName'>OS Type</a>\n\t\t\t\t\t\t\t</th>\n\t\t\t\t\t\t\t<th class='hosts'>\n\t\t\t\t\t\t\t\tRemote Console\n\t\t\t\t\t\t\t</th>\n\t\t\t\t\t\t\t<th class='hosts'>\n\t\t\t\t\t\t\t\tServer State\n\t\t\t\t\t\t\t</th>\n\t\t\t\t\t\t\t<th class='hosts'>\n\t\t\t\t\t\t\t\tAction\n\t\t\t\t\t\t\t</th>\n\t\t\t\t\t\t</tr>\n";
+		//get hosts lists 
+		 $query ="select hosts.id,HostName,IPAddress,contacts.FullName,locations.LocName,environments.EnvName,status.FullName,scan,oses.OSName,SysRemConsole,Decomm,Register from hosts,contacts,locations,environments,status,oses where hosts.SysOwner=contacts.id and hosts.SysLocation=locations.id and hosts.SysEnvironment=environments.id and hosts.Status=status.id and hosts.OS=oses.id order by $SortOrder ASC";
 
-		include("config.php");
 
-                mysql_connect( $dbhost,$dbuser,$dbpasswd ) or die ("MySQL connect failed");
-                mysql_select_db( $dbname );
-                $HostList = mysql_query( "select hosts.id,HostName,IPAddress,contacts.FullName,locations.LocName,environments.EnvName,status.FullName,scan,oses.OSName,SysRemConsole,Decomm,Register from hosts,contacts,locations,environments,status,oses where hosts.SysOwner=contacts.id and hosts.SysLocation=locations.id and hosts.SysEnvironment=environments.id and hosts.Status=status.id and hosts.OS=oses.id order by $SortOrder ASC");
-
-		$NumRows = mysql_numrows( $HostList );
-
+	         
+		// execute the query and store result
+		$result=$GLOBALS['conn']->query($query);
+		//get results length
+		$NumRows = mysqli_num_rows($result);
+		
+		//exit();
 		if ( $NumRows == 0) {
 
 			echo "\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t<th class='hosts' colspan=6>\n\t\t\t\t\t\t\t\t<center>No hosts have been defined in your database.</center>\n\t\t\t\t\t\t\t</th>\n\t\t\t\t\t\t</tr>\n";
@@ -38,38 +51,38 @@ class hosts
 
 			
 
-			while ( $i < mysql_num_rows( $HostList ) ) {
-
-				$HostID = mysql_result( $HostList, $i, "hosts.id" );
-				$ContactID = mysql_result( $HostList, $i, 'contacts.FullName' );
+			while ( $row = $result->fetch_assoc() ) {
+                
+				$HostID = $row["id"];
+				$ContactID =$row['FullName'];
 
 				if ( $FlipFlop ) { echo "\t\t\t\t\t\t<tr bgcolor=#eeeeee>\n"; } else { echo "\t\t\t\t\t\t<tr bgcolor=#cccccc>\n"; }
 
 				echo "\t\t\t\t\t\t\t<td>\n";
-				echo "\t\t\t\t\t\t\t\t<a href='index.php?option=edithost&hostid=$HostID'>".mysql_result( $HostList, $i, "HostName" )."</a>\n";
+				echo "\t\t\t\t\t\t\t\t<a href='index.php?option=edithost&hostid=$HostID'>".$row["HostName"]."</a>\n";
 				echo "\t\t\t\t\t\t\t</td>\n";
 				echo "\t\t\t\t\t\t\t<td>\n";
-				echo "\t\t\t\t\t\t\t\t<a href='index.php?option=edithost&hostid=$HostID'>" . mysql_result( $HostList, $i, "IPAddress" ) . "</a>\n";
+				echo "\t\t\t\t\t\t\t\t<a href='index.php?option=edithost&hostid=$HostID'>" .$row["IPAddress"] . "</a>\n";
 				echo "\t\t\t\t\t\t\t</td>\n";
-				echo "\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t" . mysql_result( $HostList, $i, "contacts.FullName" ) . "\n\t\t\t\t\t\t\t</td>\n";
-				echo "\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t" . mysql_result( $HostList, $i, "locations.LocName" ) . "\n\t\t\t\t\t\t\t</td>\n";
-				echo "\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t" . mysql_result( $HostList, $i, "environments.EnvName" ) . "\n\t\t\t\t\t\t\t</td>\n";
-				echo "\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t" . mysql_result( $HostList, $i, "status.FullName" ) . "\n\t\t\t\t\t\t\t</td>\n";
-				echo "\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t" . mysql_result( $HostList, $i, "oses.OSName" ) . "\n\t\t\t\t\t\t\t</td>\n";
-				if ( stristr ( mysql_result( $HostList, $i, "SysRemConsole" ), "http" ) ) {
-					echo "\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t<a href='" . mysql_result( $HostList, $i, "SysRemConsole" ) . "' target=_blank>" . mysql_result( $HostList, $i, "SysRemConsole" ) . "</a>\n\t\t\t\t\t\t\t</td>\n";
+				echo "\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t" .$row["FullName"]. "\n\t\t\t\t\t\t\t</td>\n";
+				echo "\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t" .$row["LocName"]. "\n\t\t\t\t\t\t\t</td>\n";
+				echo "\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t" .$row["EnvName"]. "\n\t\t\t\t\t\t\t</td>\n";
+				echo "\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t" .$row["FullName"]. "\n\t\t\t\t\t\t\t</td>\n";
+				echo "\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t" . $row["OSName"]. "\n\t\t\t\t\t\t\t</td>\n";
+				if ( stristr ( $row["SysRemConsole"], "http" ) ) {
+					echo "\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t<a href='" .$row["SysRemConsole"] . "' target=_blank>" . $row["SysRemConsole"] . "</a>\n\t\t\t\t\t\t\t</td>\n";
 				} else {
-					echo "\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t" . mysql_result( $HostList, $i, "SysRemConsole" ) . "\n\t\t\t\t\t\t\t</td>\n";
+					echo "\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t" . $row["SysRemConsole"]. "\n\t\t\t\t\t\t\t</td>\n";
 				}
 
 
 
-				if ( mysql_result( $HostList, $i, "Register" ) ) { 
+				if ( $row["Register"] ) { 
 					echo "\t\t\t\t\t\t\t<td style='background-color: orange;'>\n\t\t\t\t\t\t\t\tRegistered only\n\t\t\t\t\t\t\t</td>\n";
-				} else if ( mysql_result( $HostList, $i, "Decomm" ) ) { 
+				} else if ($row["Decomm"] ) { 
 					echo "\t\t\t\t\t\t\t<td style='background-color: orange;'>\n\t\t\t\t\t\t\t\tDecommissioned\n\t\t\t\t\t\t\t</td>\n"; 
 				} else {
-					echo "\t\t\t\t\t\t\t<td " . ((mysql_result( $HostList, $i, 'scan' ) == '0') ? "" : "style='background-color: orange;'") . ">\n\t\t\t\t\t\t\t\t" . $HostStates[ mysql_result( $HostList, $i, "scan" ) ] . "\n\t\t\t\t\t\t\t</td>\n";
+					echo "\t\t\t\t\t\t\t<td " . (($row['scan'] == '0') ? "" : "style='background-color: orange;'") . ">\n\t\t\t\t\t\t\t\t" . $HostStates[ $row["scan"] ] . "\n\t\t\t\t\t\t\t</td>\n";
 				}
 
 				if ( $_SESSION['userlevel'] > 2 ) {
@@ -81,9 +94,10 @@ class hosts
 				$i++;
 				$FlipFlop = !$FlipFlop;
 			}
+			$result->free();
 		}
 
-                mysql_close();
+                
 
 		echo "\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t<th class='hosts' colspan=10 >\n\t\t\t\t\t\t\t\t<p>Please click on the Host name or IP Address to see more detail about the host.</p>\n\t\t\t\t\t\t\t\t<p>Click on the column heading to sort the hosts.</p>\n\t\t\t\t\t\t\t</th>\n\t\t\t\t\t\t</tr>\n";
 
@@ -99,9 +113,10 @@ class hosts
 
 	function EditHost( $HostID ) {
 
-        	include("config.php");
-		mysql_connect( $dbhost,$dbuser,$dbpasswd ) or die ("MySQL connect failed");
-		mysql_select_db( $dbname );
+/*         	//include("config.php");
+		@mysql_connect( $dbhost,$dbuser,$dbpasswd ) or die ("MySQL connect failed");
+		mysql_select_db( $dbname ); */
+
 
 		if ( $HostID == 0 ) {
 			$IPAddress = "";
@@ -120,39 +135,41 @@ class hosts
 			echo "<center>\n<p>I hope the server you are adding is currently up, and SNMP is enabled, or I will have to become aggressive when the server checks happen.</p>\n<p> \"Gentlemen, failure is not an option!\"</p>\n<p>A little magic you may wish to know. I do not like duplicates. You give me something I already know, I will quietly just throw it away. Because I am polite.</p></center>\n";
 
 		} else {
-			$HostList = mysql_query( "select IPAddress,HostName,contacts.FullName,SysLocation,OS,SysEnvironment,status.FullName,SysRemConsole,SysSNMP,hosts.DateCreated,contacts.MobilePhone,contacts.OfficePhone,contacts.ExtraPhone,contacts.Email,locations.LocName,environments.EnvName,oses.OSName,Platform,SysVersion,DateScanned,Memory,Router,Decomm,Register,SNMPPort,CPUCores,CPUModel,ping from hosts,contacts,locations,environments,status,oses where hosts.id = $HostID and SysOwner=contacts.id and SysLocation=locations.id and SysEnvironment=environments.id and status=status.id and OS=oses.id" ) or die( mysql_error() );
-
-			$HostRec = mysql_fetch_row( $HostList );
+			$query = "select IPAddress,HostName,contacts.FullName as Cont,SysLocation,OS,SysEnvironment,status.FullName,SysRemConsole,SysSNMP,hosts.DateCreated,contacts.MobilePhone,contacts.OfficePhone,contacts.ExtraPhone,contacts.Email,locations.LocName,environments.EnvName,oses.OSName,Platform,SysVersion,DateScanned,Memory,Router,Decomm,Register,SNMPPort,CPUCores,CPUModel,ping from hosts,contacts,locations,environments,status,oses where hosts.id = $HostID and SysOwner=contacts.id and SysLocation=locations.id and SysEnvironment=environments.id and status=status.id and OS=oses.id";
+            $result=$GLOBALS['conn']->query($query);
+			$HostRec = $result->fetch_assoc();
+			//print_r($HostRec);
+	
 			$FuncContact = new hosts;
 
-			$IPAddress = $HostRec[0];
-			$HostName = $HostRec[1];
-			$ContactName = $HostRec[2];
-			$LocID = $HostRec[3];
-			$OS = $HostRec[4];
-			$Environment = $HostRec[5];
-			$Status = $HostRec[6];
-			$RemCons = $HostRec[7];
-			$SNMP = $HostRec[8];
-			$DateCreated = $HostRec[9];
-			$ContactMobile = $HostRec[10];
-			$ContactOffice = $HostRec[11];
-			$ContactExtraPhone = $HostRec[12];
-			$ContactEmail = $HostRec[13]; 
-			$LocationName = $HostRec[14];
-			$EnvName = $HostRec[15];
-			$OSType = $HostRec[16];
-			$Platform = $HostRec[17];
-			$Version = $HostRec[18];
-			$DateScan = $HostRec[19];
-			$Memory = $HostRec[20];
-			if ( $HostRec[21]==2 ) { $Routing = 'Disabled'; } else { $Routing = 'Enabled'; }
-			$Decomm=$HostRec[22];
-			$Register=$HostRec[23];
-			$SNMPPort=$HostRec[24];
-			$CPUCores=$HostRec[25];
-			$CPUModel=$HostRec[26];
-			$Ping=$HostRec[27];
+			$IPAddress = $HostRec['IPAddress'];
+			$HostName = $HostRec['HostName'];
+			$ContactName = $HostRec['Cont'];
+			$LocID = $HostRec['SysLocation'];
+			$OS = $HostRec['OS'];
+			$Environment = $HostRec['SysEnvironment'];
+			$Status = $HostRec['FullName'];
+			$RemCons = $HostRec['SysRemConsole'];
+			$SNMP = $HostRec['SysSNMP'];
+			$DateCreated = $HostRec['DateCreated'];
+			$ContactMobile = $HostRec['MobilePhone'];
+			$ContactOffice = $HostRec['OfficePhone'];
+			$ContactExtraPhone = $HostRec['ExtraPhone'];
+			$ContactEmail = $HostRec['Email']; 
+			$LocationName = $HostRec['LocName'];
+			$EnvName = $HostRec['EnvName'];
+			$OSType = $HostRec['OSName'];
+			$Platform = $HostRec['Platform'];
+			$Version = $HostRec['SysVersion'];
+			$DateScan = $HostRec['DateScanned'];
+			$Memory = $HostRec['Memory'];
+			if ( $HostRec['Router']==2 ) { $Routing = 'Disabled'; } else { $Routing = 'Enabled'; }
+			$Decomm=$HostRec['Decomm'];
+			$Register=$HostRec['Register'];
+			$SNMPPort=$HostRec['SNMPPort'];
+			$CPUCores=$HostRec['CPUCores'];
+			$CPUModel=$HostRec['CPUModel'];
+			$Ping=$HostRec['ping'];
 			
 		}	
 
@@ -171,33 +188,34 @@ class hosts
 			}
 			echo "<tr><th class='hosts'>Server owner</th><td class='hosts'><select name=sysown>\n";
 
-			$Contacts = mysql_query( "Select id,FullName from contacts order by FullName");
-			$i = 0;
-			while ( $i < mysql_num_rows( $Contacts ) ) {
+			
+			$query = "Select id,FullName from contacts order by FullName";
+			$result = $GLOBALS['conn']->query();
+			while ($Contact_row=$result->fetch_assoc()) {
 
-				$Contact = mysql_result( $Contacts, $i, 'FullName' );
+				$Contact = $Contact_row['FullName'];
 				echo "<option";
-				if ( mysql_result( $Contacts, $i, 'FullName') == $ContactName ) {
+				if ( $Contact_row['FullName']== $ContactName ) {
 					echo " selected";
 				}
-				echo " value='" . mysql_result( $Contacts, $i, 'id' ) . "'>$Contact\n";
-				$i++;
+				echo " value='" . $Contact_row['id'] . "'>$Contact\n";
 			}
 
 			echo "</select></td></tr>\n";
 			echo "<tr><th class='hosts'>Server Location</th>\n<td class='hosts'>\n<select name=sysloc>\n";
 
-			$Locations = mysql_query( "select id,LocName from locations order by LocName" );
-			$i = 0;
-			while ( $i < mysql_num_rows( $Locations ) ) {
+			$query = "select id,LocName from locations order by LocName";
+			$Locations = $GLOBALS['conn']->query($query);
+			//$i = 0;
+			while ( $row=$Locations->fetch_assoc()) {
 
-				$Location = mysql_result( $Locations, $i, "LocName" );
+				$Location = $row["LocName"];
 				echo "<option";
-				if ( mysql_result( $Locations, $i, "id" ) == $LocID ) {
+				if ( $row["id"] == $LocID ) {
 					echo " selected";
 				}
-				echo " value='" . mysql_result( $Locations, $i, 'id' ) . "'>$Location\n";
-				$i++;
+				echo " value='" . $row['id'] . "'>$Location\n";
+			//	$i++;
 
 			}
 
@@ -205,33 +223,34 @@ class hosts
 
 			echo "<tr><th class='hosts'>Server Operating System</th>\n<td class='hosts'>\n<select name=sysos>\n";
 
-			$SysOSes = mysql_query( "select id,OSName from oses order by OSName" );
-			$i = 0;
-			while ( $i < mysql_num_rows( $SysOSes ) ) {
+			$query = "select id,OSName from oses order by OSName";
+			$SysOSes = $GLOBALS['conn']->query($query);
+			//$i = 0;
+			while ($row=$SysOSes->fetch_assoc() ) {
 
-				$SysOS = mysql_result( $SysOSes, $i, "OSName" );
+				$SysOS =$row["OSName"];
 				echo "<option";
-				if ( mysql_result( $SysOSes, $i, "id" ) == $OS ) {
+				if ( $row["id"] == $OS ) {
 					echo " selected";
 				}
-				echo " value='" . mysql_result( $SysOSes, $i, 'id' ) . "'>$SysOS\n";
-				$i++;
+				echo " value='" . $row['id']. "'>$SysOS\n";
+				//$i++;
 
 			}
 
 			echo "</select></td></tr>\n";
 
 			echo "<tr><th class='hosts'>Server Environment</th>\n<td class='hosts'>\n<select name=sysenv>\n";
-			$Environments = mysql_query( "select id,EnvName from environments order by EnvName" );
-			$i = 0;
-			while ( $i < mysql_num_rows( $Environments ) ) {
+			$query = "select id,EnvName from environments order by EnvName";
+			$Environments = $GLOBALS['conn']->query($query);
+			while ( $row = $Environments->fetch_assoc()) {
 
-				$Env = mysql_result( $Environments, $i, "EnvName" );
+				$Env = $row["EnvName"];
 				echo "<option";
-				if ( mysql_result( $Environments, $i, "id" ) == $Environment ) {
+				if ( $row["id"] == $Environment ) {
 					echo " selected";
 				}
-				echo " value='" . mysql_result( $Environments, $i, 'id' ) . "'>$Env\n";
+				echo " value='" . $row['id'] . "'>$Env\n";
 				$i++;
 
 			}
@@ -239,16 +258,16 @@ class hosts
 			echo "</select></td></tr>\n";
 
 			echo "<tr><th class='hosts'>Server Status</th>\n<td class='hosts'>\n<select name=sysstat>\n";
-			$Statuses = mysql_query( "select id,FullName from status order by FullName" );
-			$i = 0;
-			while ( $i < mysql_num_rows( $Statuses ) ) {
+			$query = "select id,FullName from status order by FullName";
+			$Statuses = $GLOBALS['conn']->query($query);
+			while ($row=$Statuses->fetch_assoc()) {
 
-				$Stat = mysql_result( $Statuses, $i, "FullName" );
+				$Stat = $row["FullName"];
 				echo "<option";
-				if ( mysql_result( $Statuses, $i, "FullName" ) == $Status ) {
+				if ( $row["FullName"] == $Status ) {
 					echo " selected";
 				}
-				echo " value='" . mysql_result( $Statuses, $i, 'id' ) . "'>$Stat\n";
+				echo " value='" . $row['id'] . "'>$Stat\n";
 				$i++;
 
 			}
@@ -314,12 +333,13 @@ class hosts
 			echo "<tr><th class=hosts colspan=5><h3>Interfaces</h3></th></tr>";
 			echo "<tr><th class=hosts>Interface</th><th class=hosts>IP Address</th><th class=hosts>Net Mask</th><th class=hosts>MAC Address</th><th class=hosts>Speed bps</th></tr>";
 
-			$Nics = mysql_query( "select * from network where Host=$HostID order by Interface" );
-                        $i = 0;
-                        while ( $i < mysql_num_rows( $Nics ) ) {
+			$query = "select * from network where Host=$HostID order by Interface";
+			$Nics = $GLOBALS['conn']->query($query);
+                        
+                        while ( $row = $Nics->fetch_assoc()) {
 
-                                echo "<tr><td class=hosts>".mysql_result( $Nics, $i, 'Interface' )."</td><td class=hosts>".mysql_result( $Nics, $i, 'IPAddress')."</td><td class=hosts>".mysql_result( $Nics, $i, 'NetMask')."</td><td class=hosts>".mysql_result( $Nics, $i, 'MAC')."</td><td class=hosts align=right>".number_format( mysql_result( $Nics, $i, 'Speed'))."</td></tr>";
-                                $i++;
+                                echo "<tr><td class=hosts>".$row['Interface']."</td><td class=hosts>".$row['IPAddress']."</td><td class=hosts>".$row['NetMask']."</td><td class=hosts>".$row['MAC']."</td><td class=hosts align=right>".number_format( $row['Speed'])."</td></tr>";
+                                //$i++;
 
                         }
 			echo "</table>";
@@ -328,12 +348,12 @@ class hosts
 			echo "<tr><th class=hosts colspan=4><h3>Routing</h3></th></tr>";
 			echo "<tr><th class=hosts>Destination</th><th class=hosts>Gateway</th><th class=hosts>Mask</th><th class=hosts>Interface</th></tr>";
 
-			$Routes = mysql_query( "select * from routing where Host=$HostID order by Interface;" );
-			$i = 0;
-			while ( $i < mysql_num_rows( $Routes ) ) {
+			$query= "select * from routing where Host=$HostID order by Interface;" ;
+			$Routes = $GLOBALS['conn']->query($query);
+			while ( $row = $Routes->fetch_assoc() ) {
 
-				echo "<tr><td class=hosts>".mysql_result( $Routes, $i, 'Destination')."</td><td class=hosts>".mysql_result( $Routes, $i, 'Gateway')."</td><td class=hosts>".mysql_result( $Routes, $i, 'GenMask' )."</td><td class=hosts>".mysql_result( $Routes, $i, 'Interface')."</td></tr>";
-				$i++;
+				echo "<tr><td class=hosts>".$row['Destination']."</td><td class=hosts>".$row['Gateway']."</td><td class=hosts>".$row['GenMask']."</td><td class=hosts>".$row['Interface']."</td></tr>";
+				//$i++;
 			}
 			echo "</table><br>";
 
@@ -344,12 +364,13 @@ class hosts
 #			echo "<tr><th class=hosts>Device</th><th class=hosts>Mount Point</th><th class=hosts>File System</th><th class=hosts>Size KB</th><th class=hosts>Date Found</th></tr>";
 			echo "<tr><th class=hosts>Mount Point</th><th class=hosts>Size MB</th><th class=hosts>Date Found</th></tr>";
 
-			$Disks = mysql_query( "select * from disks where Host=$HostID order by MountPoint" );
-                        $i = 0;
-                        while ( $i < mysql_num_rows( $Disks ) ) {
+			$query ="select * from disks where Host=$HostID order by MountPoint" ;
+			$Disks = $GLOBALS['conn']->query($query);
+              
+                        while ( $row=$Disks->fetch_assoc() ) {
 
-                                echo "<tr><td class=hosts>".mysql_result( $Disks, $i, 'MountPoint')."</td><td class=hosts align=right>".number_format(mysql_result( $Disks, $i, 'DiskSize'))."</td><td class=hosts>".mysql_result( $Disks, $i, 'DateFound')."</td></tr>";
-                                $i++;
+                                echo "<tr><td class=hosts>".$row['MountPoint']."</td><td class=hosts align=right>".number_format($row['DiskSize'])."</td><td class=hosts>".$row['DateFound']."</td></tr>";
+                                //$i++;
 
                         }
 			echo "</table>";
@@ -357,23 +378,25 @@ class hosts
 
 		}
 		echo "</table>";
-		mysql_close();
+		//mysql_close();
 	}
 
 	function HostSave( $HostIP, $SysOwn, $Location, $OS, $SysEnv, $Status, $RemCons, $SNMP, $HostID, $DateCreated, $SNMPPort, $Decomm, $Register, $Ping ) {
 
-		include("config.php");
-		mysql_connect( $dbhost,$dbuser,$dbpasswd ) or die ("MySQL connect failed");
-		mysql_select_db( $dbname );
+		//include("config.php");
+	/* 	@mysql_connect( $dbhost,$dbuser,$dbpasswd ) or die ("MySQL connect failed");
+		mysql_select_db( $dbname ); */
 
 		if ( ! isset ( $Decomm ) ) { $Decomm = '0'; }
 		if ( ! isset ( $Register ) ) { $Decomm = '0'; }
 
 		if ( $HostID == 0 ) {
 
-			$OldHost = mysql_query( "select * from hosts where IPAddress='$HostIP';" );
+			$query = "select * from hosts where IPAddress='$HostIP';" ;
+			$OldHost = $GLOBALS['conn']->query($query);
 
-			if ( mysql_num_rows( $OldHost ) > 0 ) {
+
+			if ( mysqli_num_rows( $OldHost ) > 0 ) {
 
 			        echo "<form action='index.php?option=servers&sort=IPAddress' method=post><center><p>The host $HostIP is already defined in the database.</p><center>\n";
 			        echo "<center><input type='submit' value='Continue'></center></form>";
@@ -381,7 +404,15 @@ class hosts
 
 			} else {
 
-				$HostRec = mysql_query("insert into hosts (IPAddress, SysOwner, SysLocation, OS, SysEnvironment, Status, SysRemConsole, SysSNMP, DateCreated, SNMPPort, Decomm, Register, scan, ping ) values ( '$HostIP', '$SysOwn', '$Location', '$OS', '$SysEnv', '$Status', '$RemCons', '$SNMP', NOW(), $SNMPPort, $Decomm, $Register, '0', $Ping )");
+				$HostRec = "insert into hosts (IPAddress, SysOwner, SysLocation, OS, SysEnvironment, Status, SysRemConsole, SysSNMP, DateCreated, SNMPPort, Decomm, Register, scan, ping ) values ( '$HostIP', '$SysOwn', '$Location', '$OS', '$SysEnv', '$Status', '$RemCons', '$SNMP', NOW(), $SNMPPort, $Decomm, $Register, '0', $Ping )";
+				$sql = "insert into hosts (IPAddress, SysOwner, SysLocation, OS, SysEnvironment, Status, SysRemConsole, SysSNMP, DateCreated, SNMPPort, Decomm, Register, scan, ping ) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				$stmt = $GLOBALS['conn']->prepare($sql);
+
+				if(!$stmt){
+					echo"Failed";
+				}
+				$stmt ->bind_param('sssssssssidecm,');
+				
 
 			}
 
@@ -400,9 +431,9 @@ class hosts
 
 	function HostDelete( $HostID ) {
 
-		include("config.php");
+		//include("config.php");
 
-                mysql_connect( $dbhost,$dbuser,$dbpasswd ) or die ("MySQL connect failed");
+                @mysql_connect( $dbhost,$dbuser,$dbpasswd ) or die ("MySQL connect failed");
                 mysql_select_db( $dbname );
                 $HostList = mysql_query( "delete from hosts where id='$HostID'");
                 mysql_close();
@@ -410,9 +441,9 @@ class hosts
 
 #	function getcontact( $ContID ) {
 #
-#		include("config.php");
+#		//include("config.php");
 #
-#                mysql_connect( $dbhost,$dbuser,$dbpasswd ) or die ("MySQL connect failed");
+#                @mysql_connect( $dbhost,$dbuser,$dbpasswd ) or die ("MySQL connect failed");
 #                mysql_select_db( $dbname );
 #                $Contact = mysql_query( "Select * from contacts where id='$ContID'");
 #
@@ -428,9 +459,9 @@ class hosts
 #
 #	function getcontacts() {
 #
-#		include("config.php");
+#		//include("config.php");
 #
-#                mysql_connect( $dbhost,$dbuser,$dbpasswd ) or die ("MySQL connect failed");
+#                @mysql_connect( $dbhost,$dbuser,$dbpasswd ) or die ("MySQL connect failed");
 #                mysql_select_db( $dbname );
 #                $Contact = mysql_query( "Select * from contacts");
 #
