@@ -1,0 +1,186 @@
+/* default */
+
+#Header {
+	float: left;
+	width: 100%;
+	background: #6f98b7;
+	border: #003477 2px solid;
+/*	padding-left: 20px;
+	padding-top: 15px;
+	padding-bottom: 5px;
+*/
+}
+
+#Menu {
+	float: left;
+	width: 100%;
+	margin: 0;
+	background: #003477;
+	border: #003477	2px solid;
+}
+
+#Footer {
+	float: left;
+	background: #6f98b7;
+	width: 100%;
+	border: #003477 2px solid;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+#Main {
+ 	float: left;
+	position: relative;
+	width: 100%;
+	background: #999999;
+	border: #003477 2px solid;
+	padding: 5px;
+}
+
+table.hosts {
+	width: 100%;
+	border-width: 1px;
+	border-spacing: 2px;
+	border-style: solid;
+	border-color: #000000;
+}
+
+td.hosts {
+	border-bottom: 1px solid;
+	border-right: 1px solid;
+	/* border-spacing: 2px; */
+	border-color: #000000;
+}
+
+th.hosts {
+	border-width: 1px;
+	border-spacing: 2px;
+	border-style: solid;
+	border-color: #000000;
+	background: #999999;
+}
+
+table.user {
+	width: 100%;
+	border-width: 1px;
+	border-spacing: 2px;
+	border-style: solid;
+	border-color: #000000;
+
+}
+
+td.user {
+	border-width: 1px;
+	border-spacing: 2px;
+	border-style: solid;
+	border-color: #000000;
+}
+
+tr.user {
+	border-width: 1px;
+	border-spacing: 2px;
+	border-style: solid;
+	border-color: #000000;
+}
+
+th.user {
+	border-width: 1px;
+	border-spacing: 2px;
+	border-style: solid;
+	border-color: #000000;
+	background-color: #999999;
+}
+
+body, table, tr, td, p, li, ul {
+	margin: 0px 0px 0px 0px;
+	font-family: "Trebuchet MS",Trebuchet,Arial,Helvetica,sans-serif;
+	color: #003477;
+	font-size: 14px;
+	background-repeat: repeat-y;
+}
+
+a, a:visited {
+	text-decoration: none;
+/*	color: #0074bb;*/
+	color: #002244;
+}
+
+a:active, a:hover {
+	text-decoration: none;
+	color: red;
+}
+
+.linkMenu, .linkMenu:visited {
+	color: #DCE7ED;
+	text-decoration: underline;
+}
+
+.linkMenu:active, .linkMenu:hover {
+	color: white;
+	text-decoration: underline;
+}
+
+/* text */
+
+.textPageHeading {
+	font-size: 18px;
+	font-weight: bold;
+	color: black;
+}
+
+.textParagraphHeading {
+	font-size: 16px;
+	font-weight: bold;
+	color: black;
+}
+
+.textMenu {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: white;
+	background-color: #40637A;
+	line-height: 14px;
+	padding: 5px;
+}
+
+.textMenuHeading {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: white;
+}
+
+.textCopyright {
+	font-size: 10px;
+}
+
+.textChangelog {
+	color: black;
+	background-color: #f1f1f1;
+	font-family: monospace;
+	border-width: 1;
+	border-style: solid;
+	border-color: #787878;
+	padding: 5px;
+}
+
+.textNotice {
+	color: black;
+	background-color: #f1f1f1;
+	border-width: 1;
+	border-style: solid;
+	border-color: #EA0437;
+	padding: 5px;
+}
+
+.textNewsItem {
+	color: black;
+	font-size: 12px;
+}
+
+.textLatestVersion {
+	color: #464646;
+	font-size: 12px;
+	font-family: monospace;
+}
+
