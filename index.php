@@ -243,15 +243,6 @@ if ( $action == 'login' ){
 
 }
 
-echo "\n\t\t\t\t</td>\n";
-echo "\t\t\t</tr>\n";
-echo "\t\t\t<tr bgcolor='#6f98b7' style='padding: 5px; border: #183c8f 2px solid;'>\n";
-echo "\t\t\t\t<td colspan='3' style='padding: 5px; border: #183c8f 2px solid;'>\n";
-echo "\t\t\t\t\t<center>This site was hand rolled by Dave le Roux using a blend of four Open Source languages.</center>\n";
-echo "\t\t\t\t</td>\n";
-echo "\t\t\t</tr>\n";
-echo "\t\t</table>\n";
-echo "\t</body>\n";
-echo "</html>";
+
 
 ?>

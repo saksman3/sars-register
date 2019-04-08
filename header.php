@@ -19,7 +19,7 @@
 						<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
 		</head>
 		<body>
-			<div class='header'>
+			<div class='navigation'>
 			   <nav class='navbar navbar-expand-lg navbar-light'>
 				 <a class='navbar-brand' href='index.php?option=home'>
 				   <img src='images/SARS-WebBanner-2.png'>

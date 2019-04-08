@@ -40,23 +40,7 @@ class layout
 
 	function LoginForm(){
 
-		echo "\t\t\t\t\t<h1>Login page</h1>\n";
-		if ( $_SESSION['failed'] ) {
-			echo "\t\t\t\t\t<p>Your login attempt failed, please try again.</p>";
-		}
-		echo "\t\t\t\t\t<form id='form1' name='form1' method='post' action='$_SERVER[PHP_SELF]'>\n";
-		echo "\t\t\t\t\t\t<table>\n";
-		echo "\t\t\t\t\t\t\t<tr>\n";
-		echo "\t\t\t\t\t\t\t\t<td>User : </td>\n";
-		echo "\t\t\t\t\t\t\t\t<td><input name='username' type='text' id='username' /></td>\n";
-		echo "\t\t\t\t\t\t\t</tr>\n";
-		echo "\t\t\t\t\t\t\t<tr>\n";
-		echo "\t\t\t\t\t\t\t\t<td>Password : </td>\n";
-		echo "\t\t\t\t\t\t\t\t<td><input name='password' type='password' id='password' /></td>\n";
-		echo "\t\t\t\t\t\t\t</tr>\n";
-		echo "\t\t\t\t\t\t</table>\n";
-		echo "\t\t\t\t\t\t<input name='Login' type='submit' id='Login' value='Login' />\n";
-		echo "\t\t\t\t\t</form>\n";
+		    include("loginForm.php");
 
 	}
 
