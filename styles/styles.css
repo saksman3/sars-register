@@ -1,186 +1,281 @@
 /* default */
-
+body {
+  font-family: sans-serif;
+}
 #Header {
-	float: left;
-	width: 100%;
-	background: #6f98b7;
-	border: #003477 2px solid;
-/*	padding-left: 20px;
+  float: left;
+  width: 100%;
+  background: #6f98b7;
+  border: #003477 2px solid;
+  /*	padding-left: 20px;
 	padding-top: 15px;
 	padding-bottom: 5px;
 */
 }
 
 #Menu {
-	float: left;
-	width: 100%;
-	margin: 0;
-	background: #003477;
-	border: #003477	2px solid;
+  float: left;
+  width: 100%;
+  margin: 0;
+  background: #003477;
+  border: #003477 2px solid;
 }
 
 #Footer {
-	float: left;
-	background: #6f98b7;
-	width: 100%;
-	border: #003477 2px solid;
-	padding-top: 5px;
-	padding-bottom: 5px;
+  float: left;
+  background: #6f98b7;
+  width: 100%;
+  border: #003477 2px solid;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 #Main {
- 	float: left;
-	position: relative;
-	width: 100%;
-	background: #999999;
-	border: #003477 2px solid;
-	padding: 5px;
+  float: left;
+  position: relative;
+  width: 100%;
+  background: #999999;
+  border: #003477 2px solid;
+  padding: 5px;
 }
 
 table.hosts {
-	width: 100%;
-	border-width: 1px;
-	border-spacing: 2px;
-	border-style: solid;
-	border-color: #000000;
+  width: 100%;
+  border-width: 1px;
+  border-spacing: 2px;
+  border-style: solid;
+  border-color: #000000;
 }
 
 td.hosts {
-	border-bottom: 1px solid;
-	border-right: 1px solid;
-	/* border-spacing: 2px; */
-	border-color: #000000;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
+  /* border-spacing: 2px; */
+  border-color: #000000;
 }
 
 th.hosts {
-	border-width: 1px;
-	border-spacing: 2px;
-	border-style: solid;
-	border-color: #000000;
-	background: #999999;
+  border-width: 1px;
+  border-spacing: 2px;
+  border-style: solid;
+  border-color: #000000;
+  background: #999999;
 }
 
 table.user {
-	width: 100%;
-	border-width: 1px;
-	border-spacing: 2px;
-	border-style: solid;
-	border-color: #000000;
-
+  width: 100%;
+  border-width: 1px;
+  border-spacing: 2px;
+  border-style: solid;
+  border-color: #000000;
 }
 
 td.user {
-	border-width: 1px;
-	border-spacing: 2px;
-	border-style: solid;
-	border-color: #000000;
+  border-width: 1px;
+  border-spacing: 2px;
+  border-style: solid;
+  border-color: #000000;
 }
 
 tr.user {
-	border-width: 1px;
-	border-spacing: 2px;
-	border-style: solid;
-	border-color: #000000;
+  border-width: 1px;
+  border-spacing: 2px;
+  border-style: solid;
+  border-color: #000000;
 }
 
 th.user {
-	border-width: 1px;
-	border-spacing: 2px;
-	border-style: solid;
-	border-color: #000000;
-	background-color: #999999;
+  border-width: 1px;
+  border-spacing: 2px;
+  border-style: solid;
+  border-color: #000000;
+  background-color: #999999;
 }
 
-body, table, tr, td, p, li, ul {
-	margin: 0px 0px 0px 0px;
-	font-family: "Trebuchet MS",Trebuchet,Arial,Helvetica,sans-serif;
-	color: #003477;
-	font-size: 14px;
-	background-repeat: repeat-y;
+body,
+table,
+tr,
+td,
+p,
+li,
+ul {
+  margin: 0px 0px 0px 0px;
+  font-family: "Trebuchet MS", Trebuchet, Arial, Helvetica, sans-serif;
+  color: #003477;
+  font-size: 14px;
+  background-repeat: repeat-y;
 }
 
-a, a:visited {
-	text-decoration: none;
-/*	color: #0074bb;*/
-	color: #002244;
+a,
+a:visited {
+  text-decoration: none;
+  /*	color: #0074bb;*/
+  color: #002244;
 }
 
-a:active, a:hover {
-	text-decoration: none;
-	color: red;
+a:active,
+a:hover {
+  text-decoration: none;
+  color: red;
 }
 
-.linkMenu, .linkMenu:visited {
-	color: #DCE7ED;
-	text-decoration: underline;
+.linkMenu,
+.linkMenu:visited {
+  color: #dce7ed;
+  text-decoration: underline;
 }
 
-.linkMenu:active, .linkMenu:hover {
-	color: white;
-	text-decoration: underline;
+.linkMenu:active,
+.linkMenu:hover {
+  color: white;
+  text-decoration: underline;
 }
 
 /* text */
 
 .textPageHeading {
-	font-size: 18px;
-	font-weight: bold;
-	color: black;
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
 }
 
 .textParagraphHeading {
-	font-size: 16px;
-	font-weight: bold;
-	color: black;
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
 }
 
 .textMenu {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	color: white;
-	background-color: #40637A;
-	line-height: 14px;
-	padding: 5px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  color: white;
+  background-color: #40637a;
+  line-height: 14px;
+  padding: 5px;
 }
 
 .textMenuHeading {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	font-weight: bold;
-	color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
 }
 
 .textCopyright {
-	font-size: 10px;
+  font-size: 10px;
 }
 
 .textChangelog {
-	color: black;
-	background-color: #f1f1f1;
-	font-family: monospace;
-	border-width: 1;
-	border-style: solid;
-	border-color: #787878;
-	padding: 5px;
+  color: black;
+  background-color: #f1f1f1;
+  font-family: monospace;
+  border-width: 1;
+  border-style: solid;
+  border-color: #787878;
+  padding: 5px;
 }
 
 .textNotice {
-	color: black;
-	background-color: #f1f1f1;
-	border-width: 1;
-	border-style: solid;
-	border-color: #EA0437;
-	padding: 5px;
+  color: black;
+  background-color: #f1f1f1;
+  border-width: 1;
+  border-style: solid;
+  border-color: #ea0437;
+  padding: 5px;
 }
 
 .textNewsItem {
-	color: black;
-	font-size: 12px;
+  color: black;
+  font-size: 12px;
 }
 
 .textLatestVersion {
-	color: #464646;
-	font-size: 12px;
-	font-family: monospace;
+  color: #464646;
+  font-size: 12px;
+  font-family: monospace;
 }
-
+/* my changes */
+.links-table {
+  width: 100%;
+}
+.links-table tr > td a {
+  color: red;
+  padding: 0 10px;
+  border: 1px solid red;
+}
+.links-table tr > td a:hover {
+  background: green;
+}
+/* head */
+#head {
+  height: 100%;
+}
+.welcome-title {
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+.welcome-title h1 {
+  animation: loaded 3s both;
+  font-weight: 900;
+  font-size: 60px;
+}
+.welcome-title p {
+  animation: loadedP 3s both;
+  animation-delay: 3s;
+  font-size: 30px;
+}
+@keyframes loaded {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes loadedP {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.welcome-title p {
+  color: white;
+}
+.img {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)),
+    url("../images/SARS-WebBanner-2.png") no-repeat center center fixed;
+  background-size: contain;
+  height: 100%;
+}
+/* navbar */
+.navigation {
+  top: 0;
+  position: sticky;
+  z-index: 2;
+}
+.navbar {
+  padding: 0 !important;
+  background: #777;
+  box-shadow: 3px 3px 3px 3px #464646;
+}
+.nav-link {
+  color: white !important;
+  transition: 0.4s all ease-in-out;
+  border-radius: 5px;
+}
+.nav-link:hover {
+  background: white;
+  color: #464646 !important;
+}
+.navbar-brand img {
+  width: 200px;
+}

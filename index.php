@@ -79,7 +79,7 @@ if (isset($_GET['option'])){
 
 	} else {
 
-		$action = 'links';
+		$action = 'home';
 
 	}
 
@@ -154,9 +154,9 @@ if ( $action == 'login' ){
 
 	echo $PageHostAdd->EditHost( $_GET['hostid'] );
 
-} else if ( $action == 'links' ) {
+} else if ( $action == 'home' ) {
 
-	echo "\t\t\t\t\t<table width=100%>\n";
+/* 	echo "\t\t\t\t\t<table class='links-table'>\n";
 	echo "\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t<th class='hosts'>Useful links on the SARS network.</th>\n\t\t\t\t\t\t</tr>\n";
 	echo "\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t<td><a href='http://10.30.2.227/nagios/' target='_blank'>Brooklyn Nagios</a><br></td>\n\t\t\t\t\t\t</tr>\n";
 	echo "\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t<td><a href='http://10.30.2.227/cacti/' target='_blank'>Brooklyn Cacti</a><br></td>\n\t\t\t\t\t\t</tr>\n";
@@ -166,7 +166,8 @@ if ( $action == 'login' ){
 	echo "\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t<td><a href='http://ptaenrem02.sars.gov.za/arsys/shared/login.jsp?/arsys/home' target='_blank'>SARS Remedy</a><br></td>\n\t\t\t\t\t\t</tr>\n";
 	echo "\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t<td><a href='http://myportal/Pages/Default.aspx' target='_blank'>SARS Portal</a><br></td>\n\t\t\t\t\t\t</tr>\n";
 	echo "\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t<td><a href='http://www.google.com/' target='_blank'>Google</a><br></td>\n\t\t\t\t\t\t</tr>\n";
-	echo "\t\t\t\t\t</table>\n";
+	echo "\t\t\t\t\t</table>\n"; */
+	include("homeBanner.php");
 
 } else if ( ( $action == 'users' ) & ( $_SESSION['userlevel'] > 3 ) ) {
 

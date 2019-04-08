@@ -7,78 +7,7 @@ class layout
 	{
 	
 		/* The HTML page header is generated here. */
-		echo "<html>\n";
-		echo "\t<head>\n";
-		echo "\t\t<title>$TitleString</title>\n";
-		echo "\t\t<link href='styles/styles.css' rel='stylesheet' type='text/css'>\n";
-		echo "\t\t<script language='javascript' type='text/javascript'>\n";
-		echo "\t\tfunction limitText(limitField, limitCount, limitNum) {\n";
-		echo "\t\t\tif (limitField.value.length > limitNum) {\n";
-		echo "\t\t\t   limitField.value = limitField.value.substring(0, limitNum);\n";
-		echo "\t\t\t} else {\n";
-		echo "\t\t\t   limitCount.value = limitNum - limitField.value.length;\n";
-		echo "\t\t\t}\n";
-		echo "\t\t}\n";
-		echo "\t\t</script>\n";
-		echo "\t</head>\n";
-		echo "\t<body leftmargin='0' topmargin='0' marginwidth='0' marginheight='0'>\n";
-		echo "\t\t<table width='100%' cellspacing='0' cellpadding='0'>\n";
-		echo "\t\t\t<tr height='37' bgcolor='#6f98b7'>\n";
-		echo "\t\t\t\t<td valign='bottom' colspan='3' nowrap>\n";
-		echo "\t\t\t\t\t<table width='100%' cellspacing='0' cellpadding='0'>\n";
-		echo "\t\t\t\t\t\t<tr>\n";
-		echo "\t\t\t\t\t\t\t<td align='middle' valign='middle'>\n";
-		echo "\t\t\t\t\t\t\t\t<h1><b>$TitleString</b></h1>\n";
-		echo "\t\t\t\t\t\t\t</td>\n";
-		echo "\t\t\t\t\t\t\t<td align='right'>\n";
-		echo "\t\t\t\t\t\t\t\t<img src='images/SARS-WebBanner-2.png' align='absmiddle'>\n";
-		echo "\t\t\t\t\t\t\t</td>\n";
-		echo "\t\t\t\t\t\t</tr>\n";
-		echo "\t\t\t\t\t</table>\n";
-		echo "\t\t\t\t</td>\n";
-		echo "\t\t\t</tr>\n";
-		echo "\t\t\t<tr style='background-color: #183c8f; height: 2px;'>\n";
-		echo "\t\t\t\t<td colspan=3 style='background: #183c8f;'>\n";
-		echo "\t\t\t\t\t<img src='images/blank.png'>\n";
-		echo "\t\t\t\t</td>\n";
-		echo "\t\t\t</tr>\n";
-		echo "\t\t\t<tr height='5' bgcolor='#6f98b7'>\n";
-		echo "\t\t\t\t<td colspan='3'>\n";
-		echo "\t\t\t\t\t<table width='100%'>\n";
-		echo "\t\t\t\t\t\t<tr>\n";
-		echo "\t\t\t\t\t\t\t<td>\n";
-		echo "\t\t\t\t\t\t\t\tGood day ".$_SESSION['userfullname']."\n";
-		echo "\t\t\t\t\t\t\t</td>\n";
-		echo "\t\t\t\t\t\t\t<td align='right'>\n";
-		echo "\t\t\t\t\t\t\t\tYou look busy today!!\n";
-		echo "\t\t\t\t\t\t\t</td>\n";
-		echo "\t\t\t\t\t\t</tr>\n";
-		echo "\t\t\t\t\t</table>\n";
-		echo "\t\t\t\t</td>\n";
-		echo "\t\t\t</tr>\n";
-		echo "\t\t\t<tr style='background-color: #183c8f; height: 2px;'>\n";
-		echo "\t\t\t\t<td colspan=3 style='background: #183c8f;'>\n";
-		echo "\t\t\t\t\t<img src='images/blank.png'>\n";
-		echo "\t\t\t\t</td>\n";
-		echo "\t\t\t</tr>\n";
-		echo "\t\t\t<tr>\n";
-		echo "\t\t\t\t<td valign='top' colspan='1' rowspan='2' width='10%' style='padding: 5px; border-right: #183c8f 2px solid;'>\n";
-		echo "\t\t\t\t\t<table cellpadding='3' cellspacing='0' border='0' width='100%'>\n";
-		echo "\t\t\t\t\t\t<tr>\n";
-		echo "\t\t\t\t\t\t\t<td>\n";
-		echo "\t\t\t\t\t\t\t\t<a href='index.php?option=links'>Useful links</a>\n";
-		echo "\t\t\t\t\t\t\t</td>\n";
-		echo "\t\t\t\t\t\t</tr>\n";
-		echo "\t\t\t\t\t\t<tr>\n";
-		echo "\t\t\t\t\t\t\t<td>\n";
-		echo "\t\t\t\t\t\t\t\t<a href='index.php?option=sms'>SMS Despatcher</a>\n";
-		echo "\t\t\t\t\t\t\t</td>\n";
-		echo "\t\t\t\t\t\t</tr>\n";
-		echo "\t\t\t\t\t\t<tr>\n";
-		echo "\t\t\t\t\t\t\t<td>\n";
-		echo "\t\t\t\t\t\t\t\t<a href='index.php?option=servers&sort=IPAddress'>Server Register</a>\n";
-		echo "\t\t\t\t\t\t\t</td>\n";
-		echo "\t\t\t\t\t\t</tr>\n";
+         include("header.php");
 
 		if ( $_SESSION['userlevel'] > 3 ) {
 			echo "\t\t\t\t\t\t<tr>\n";
@@ -93,11 +22,7 @@ class layout
 			echo "\t\t\t\t\t\t</tr>\n";
 		}
 		if ( $_SESSION['username'] == "Guest" ) {
-			echo "\t\t\t\t\t\t<tr>\n";
-			echo "\t\t\t\t\t\t\t<td>\n";
-			echo "\t\t\t\t\t\t\t\t<a href='index.php?option=login'>Login</a>\n";
-			echo "\t\t\t\t\t\t\t</td>\n";
-			echo "\t\t\t\t\t\t</tr>\n";
+			
 		} else {
 			echo "\t\t\t\t\t\t<tr>\n";
 			echo "\t\t\t\t\t\t\t<td>\n";
