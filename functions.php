@@ -1,142 +1,87 @@
 <?php
-
+  include("config.php");
 class layout
 {
 
 	function Header( $TitleString )
 	{
-	
 		/* The HTML page header is generated here. */
          include("header.php");
-
-		if ( $_SESSION['userlevel'] > 3 ) {
-			echo "\t\t\t\t\t\t<tr>\n";
-			echo "\t\t\t\t\t\t\t<td>\n";
-			echo "\t\t\t\t\t\t\t\t<a href='index.php?option=contacts'>Server Contacts</a>\n";
-			echo "\t\t\t\t\t\t\t</td>\n";
-			echo "\t\t\t\t\t\t</tr>\n";
-			echo "\t\t\t\t\t\t<tr>\n";
-			echo "\t\t\t\t\t\t\t<td>\n";
-			echo "\t\t\t\t\t\t\t\t<a href='index.php?option=users'>Register Users</a>\n";
-			echo "\t\t\t\t\t\t\t</td>\n";
-			echo "\t\t\t\t\t\t</tr>\n";
-		}
-		if ( $_SESSION['username'] == "Guest" ) {
-			
-		} else {
-			echo "\t\t\t\t\t\t<tr>\n";
-			echo "\t\t\t\t\t\t\t<td>\n";
-			echo "\t\t\t\t\t\t\t\t<a href='index.php?option=logout'>Logout</a>\n";
-			echo "\t\t\t\t\t\t\t</td>\n";
-			echo "\t\t\t\t\t\t</tr>\n";
-		}
-		echo "\t\t\t\t\t</table>\n";
-		echo "\t\t\t\t</td>\n";
-		echo "\t\t\t</tr>\n";
-		echo "\t\t\t<tr>\n";
-		echo "\t\t\t\t<td width='100%' colspan='2' valign='top' style='padding: 5px; border-right: #aaaaaa 1px solid;'>\n";
 	}
 
 
 	function LoginForm(){
 
-		    include("loginForm.php");
+		include("loginForm.php");
 
 	}
 
 	function ShowUsers(){
 
-		include("config.php");
-	        mysql_connect( $dbhost,$dbuser,$dbpasswd ) or die ("MySQL connect failed");
-	        mysql_select_db( $dbname );
- 		$UserList = mysql_query( "select * from users ");
-		mysql_close();
+         $query = "select * from users";
+		 $UserList = $GLOBALS['conn']->query($query);
+		echo"<div class ='container text-center user-list'>
 
-		echo "\t\t\t\t\t<p><a href='index.php?option=adduser'>Add a new user</a></p>\n";
-		echo "\t\t\t\t\t<table class='user'>\n";
-		echo "\t\t\t\t\t\t<tr class='user'>\n";
-		echo "\t\t\t\t\t\t\t<th class='user' colspan=7>\n";
-		echo "\t\t\t\t\t\t\t\tUsers registered on this system\n";
-		echo "\t\t\t\t\t\t\t</th>\n";
-		echo "\t\t\t\t\t\t</tr>\n";
-		echo "\t\t\t\t\t\t<tr class='user'>\n";
-		echo "\t\t\t\t\t\t\t<th class='user'>\n";
-		echo "\t\t\t\t\t\t\t\tUser name\n";
-		echo "\t\t\t\t\t\t\t</th>\n";
-		echo "\t\t\t\t\t\t\t<th class='user'>\n";
-		echo "\t\t\t\t\t\t\t\tFull Name\n";
-		echo "\t\t\t\t\t\t\t</th>\n";
-		echo "\t\t\t\t\t\t\t<th class='user'>\n";
-		echo "\t\t\t\t\t\t\t\tMobile\n";
-		echo "\t\t\t\t\t\t\t</th>\n";
-		echo "\t\t\t\t\t\t\t<th class='user'>\n";
-		echo "\t\t\t\t\t\t\t\tEmail\n";
-		echo "\t\t\t\t\t\t\t</th>\n";
-		echo "\t\t\t\t\t\t\t<th class='user'>\n";
-		echo "\t\t\t\t\t\t\t\tType\n";
-		echo "\t\t\t\t\t\t\t</th>\n";
-		echo "\t\t\t\t\t\t\t<th class='user'>\n";
-		echo "\t\t\t\t\t\t\t\tDate Created\n";
-		echo "\t\t\t\t\t\t\t</th>\n";
-		echo "\t\t\t\t\t\t\t<th class='user'>\n";
-		echo "\t\t\t\t\t\t\t\tLast Login\n";
-		echo "\t\t\t\t\t\t\t</th>\n";
-		echo "\t\t\t\t\t\t</tr>\n";
+		<h2>Users registered on this system</h2>
+		<p class='bg-info py-2'><a href='index.php?option=adduser'>Add a new user</a></p>
 
-		$FlipFlop = false;
-
-		$i = 0;
-
-		while ( $i < mysql_num_rows( $UserList ) ) {
-			if ( $FlipFlop ) {
-				echo "\t\t\t\t\t\t<tr bgcolor=#cccccc>\n";
-			} else {
-				echo "\t\t\t\t\t\t<tr bgcolor=#eeeeee>\n";
-			}
-
-			echo "\t\t\t\t\t\t\t<td class='user'>\n\t\t\t\t\t\t\t\t<a href='index.php?option=useredit&user=" . mysql_result( $UserList, $i, "id" ) . "'>" . mysql_result( $UserList, $i, "UserName" ) . "</a>\n\t\t\t\t\t\t\t</td>\n";
-			echo "\t\t\t\t\t\t\t<td class='user'>\n\t\t\t\t\t\t\t\t" . mysql_result( $UserList, $i, "FullName" ) . "\n\t\t\t\t\t\t\t</td>\n";
-			echo "\t\t\t\t\t\t\t<td class='user'>\n\t\t\t\t\t\t\t\t" . mysql_result( $UserList, $i, "MobilePhone" ) . "\n\t\t\t\t\t\t\t</td>\n";
-			echo "\t\t\t\t\t\t\t<td class='user'>\n\t\t\t\t\t\t\t\t" . mysql_result( $UserList, $i, "Email" ) . "\n\t\t\t\t\t\t\t</td>\n";
-			echo "\t\t\t\t\t\t\t<td class='user'>\n";
-			if ( mysql_result( $UserList, $i, "Level" ) == 2 ) {
-				echo "\t\t\t\t\t\t\t\tGood Buddy\n";
-			} else if ( mysql_result( $UserList, $i, "Level" ) == 3 ) {
-				echo "\t\t\t\t\t\t\t\tTeam member\n";
-			} else {
-				echo "\t\t\t\t\t\t\t\tUber Administrator\n";
-			}
-			echo "\t\t\t\t\t\t\t</td>\n";
-			echo "\t\t\t\t\t\t\t<td class='user'>\n\t\t\t\t\t\t\t\t" . mysql_result( $UserList, $i, "DateCreated" ) . "\n\t\t\t\t\t\t\t</td>\n";
-			echo "\t\t\t\t\t\t\t<td class='user'>\n\t\t\t\t\t\t\t\t" . mysql_result( $UserList, $i, "LastLogin" ) . "\n\t\t\t\t\t\t\t</td>\n";
-			$FlipFlop = !$FlipFlop;
-			$i++;
-			echo "\t\t\t\t\t\t</tr>\n";
-		}
-
-		echo "\t\t\t\t\t</table>\n";
-
+		";
+	    echo"<table class='table table-bordered table-hover text-condensed table-striped'>
+             <thead>
+                <th >User name</th>
+                <th >Full Name</th>
+                <th >Mobile</th>
+                <th >Email</th>
+                <th >Type</th>
+                <th >Date Created</th>
+                <th >Last Login</th>
+			 </thead>
+			 <tbody>
+			 ";
+				 
+			 while ( $row = $UserList->fetch_assoc()) {
+			 echo"
+			 <tr>
+				 <td><a href='index.php?option=useredit&user=" . $row["id"] . "'>" . $row["UserName"]. "</a></td>
+				 <td>" . $row["FullName"]. "</td>
+				 <td>" . $row["MobilePhone"] . "</td>
+				 <td>" . $row["Email"]. "</td>
+				 <td>";
+						if ( $row["Level"] == 2 ) {
+							echo "Good Buddy";
+						} else if ( $row["Level"] == 3 ) {
+							echo "Team member";
+						} else {
+							echo "Uber Administrator";
+						}
+				echo"</td>
+				   
+				";
+				echo"<td>" . $row["DateCreated"] . "</td>";
+                echo"<td>" .$row["LastLogin"] . "</td>";
+			echo" </tr>";
+			 }
+	       echo"</tbody> </table>
+			 ";
 	}
 
 	function EditUser( $UserID ){
-
+		echo"<div class='container edit-user'>";
+		  
 		if ( $UserID <> 0 ) {
-
-			include("config.php");
-		        mysql_connect( $dbhost,$dbuser,$dbpasswd ) or die ("MySQL connect failed");
-		        mysql_select_db( $dbname );
-	 		$UserRecord = mysql_query( "select * from users where id='$UserID'") or die("Bad news dude");
-			mysql_close();
-			$UserInfo = mysql_fetch_row( $UserRecord );
-	
-			$UserName = $UserInfo[1];
-			$UserFullName = $UserInfo[2];
-			$UserMobile = $UserInfo[3];
-			$UserEmail = $UserInfo[4];
-			$UserType = $UserInfo[5];
-			$UserPassword = $UserInfo[8];
+            
+			 $UserRecord ="select * from users where id='$UserID'";
+			 $result = $GLOBALS['conn']->query($UserRecord);
+			$UserInfo = $result->fetch_assoc();
+			$UserName = $UserInfo['UserName'];
+			$UserFullName = $UserInfo['FullName'];
+			$UserMobile = $UserInfo['MobilePhone'];
+			$UserEmail = $UserInfo['Email'];
+			$UserType = $UserInfo['Level'];
+			$UserPassword = $UserInfo['Password'];
 			$UserPassword1 = "";
 			$UserPassword2 = "";
+			echo"<h4 class='text-center text-danger'>Editing user ".$UserName."</h4>";
 
 		} else {
 
@@ -148,9 +93,10 @@ class layout
 			$UserPassword = "";
 			$UserPassword1 = "";
 			$UserPassword2 = "";
+			echo"<h4 class='text-center'>Add New user</h4>";
 
 		}
-
+        
 		echo "<form action='index.php?option=SaveUser' method=post>";
 		echo "<table class=user><tr class=user><th class='user' colspan=2>Edit registered system user.</th></tr>";
 		echo "<input type=hidden name='UID' value=$UserID>";
@@ -192,9 +138,10 @@ class layout
 		echo "</table>";
 		echo "<center><input type='submit' value='Save'></center>";
 		echo "</form>";
+		echo"</div>";
 
 	}
 
 }
-
+echo"</div>";
 ?>

@@ -1,4 +1,5 @@
 <?php
+//include ('config.php');
 
 /* ==================================================================
 Script name : 	SARS Server Register.
@@ -15,13 +16,13 @@ Requirements :
 	
 =====================================================================*/
 
+
 error_reporting(E_ALL);
 
 include("functions.php");
 
 session_start();
-if ( $_SESSION['username'] == "" ) {
-
+if ( !isset($_SESSION['username']) ) {
 	$_SESSION['username'] = "Guest";
 	$_SESSION['userfullname'] = "Guest";
 	$_SESSION['userlevel'] = 1;
@@ -45,26 +46,36 @@ if ( isset( $_POST['Login'] ) ) {
 	$md5_password = md5( $_POST['password'] );
 
 	include("config.php");
-	mysql_connect( $dbhost,$dbuser,$dbpasswd ) or die ("MySQL connect failed");
-	mysql_select_db( $dbname );
-	$LoginCheck = mysql_query( "select * from users where UserName='$UserToBe' and Password='$md5_password'");
 
-	if ( mysql_num_rows( $LoginCheck ) != '0' ) { 
-
-		$_SESSION['username'] = mysql_result( $LoginCheck, 0, "UserName" );
-		$_SESSION['userfullname'] = mysql_result( $LoginCheck, 0, "FullName" );
-		$_SESSION['userlevel'] = mysql_result( $LoginCheck, 0, "Level" );
+	$query = "select * from users where UserName='$UserToBe' and Password='$md5_password'";
+	$LoginCheck = $GLOBALS['conn']->query($query);
+	$count = mysqli_num_rows($LoginCheck);
+	if ($count != '0' ) { 
+		$row = $LoginCheck->fetch_assoc();
+		print_r($row);
+		/* exit(); */
+		$_SESSION['username'] =  $row["UserName"];
+		$_SESSION['userfullname'] = $row["FullName"];
+		$_SESSION['userlevel'] = $row["Level"];
 		$_SESSION['failed'] = 0;
 		$DateNow = date("Y-m-d H:i:s");
-		$LoginCheck = mysql_query("UPDATE users SET LastLogin='$DateNow' WHERE UserName='" . $_SESSION['username'] . "'");
-		header( "Location: index.php" );
+		
+
+	//$LoginCheck = mysql_query("); 
+		$sql = "UPDATE users SET LastLogin=? WHERE UserName=?";
+		$stmt = $GLOBALS['conn']->prepare($sql) or die("failed to prepare");
+   echo"date"."-".$DateNow;
+		$stmt->bind_param('ss',$DateNow,$_SESSION['username']) or die("bind_param failed");
+		$stmt->execute() or die("failed exec");
+		$stmt->close();
+        header( "Location: index.php?" );
 	} else {
 
 		$_SESSION['failed'] = 1;
 
 	}
 
-	mysql_close();
+   $GLOBALS['conn']->close();
 }
 
 if (isset($_GET['option'])){
@@ -118,12 +129,14 @@ if ( $action == 'login' ){
 
 } else if ( $action == 'delhost' ) {
 
-	include("config.php");
+ 	include("config.php");
 
-	mysql_connect( $dbhost,$dbuser,$dbpasswd ) or die ("MySQL connect failed");
-	mysql_select_db( $dbname );
-	$HostList = mysql_query( "delete from hosts where id='" . $_GET['hostid'] . "'");
-	mysql_close();
+/* 	mysql_connect( $dbhost,$dbuser,$dbpasswd ) or die ("MySQL connect failed");
+	mysql_select_db( $dbname ); * */
+	$query = "delete from hosts where id='" . $_GET['hostid'] . "'";
+	$result = $GLOBALS['conn']->query($query) or die('error in query');
+	//$HostList = $result->fetch_assoc();
+	
 	header( "Location: index.php?option=servers&sort=IPAddress");
 
 } else if ( $action == 'servers' ) {
@@ -189,10 +202,6 @@ if ( $action == 'login' ){
 
 } else if ( ( $action == 'SaveUser' ) & ( $_SESSION['userlevel'] > 3 ) ) {
 
-	include("config.php");
-
-	mysql_connect( $dbhost,$dbuser,$dbpasswd ) or die ("MySQL connect failed");
-	mysql_select_db( $dbname );
 
 	$Uid = $_POST['UID'];
 	$UName = $_POST['UserName'];
@@ -208,7 +217,7 @@ if ( $action == 'login' ){
 		if ( $UPwd1 == $UPwd2 ) {
 			$NewPass = md5( $UPwd1 );
 			if ( $Uid <> '0' ) {
-				$PasswdWrite = mysql_query("UPDATE users SET Password='$NewPass' WHERE id='$Uid'");
+				$PasswdWrite = mysqli_query($GLOBALS['conn'],"UPDATE users SET Password='$NewPass' WHERE id='$Uid'");
 				header( "Location: index.php?option=users" );
 			}
 		} else {
@@ -221,21 +230,21 @@ if ( $action == 'login' ){
 
 	if ( $Uid == '0' ) {
 
-		$UserWrite = mysql_query("insert into users (UserName, FullName, MobilePhone, Email, Level, DateCreated, Password) values ( '$UName', '$UFName', '$UMNum', '$UEMail', '$UType', '" . date("Y-m-d H:i:s") . "', '" . $NewPass . "' );" ) or die ("Problems" . mysql_error());
+		$UserWrite = mysqli_query("insert into users (UserName, FullName, MobilePhone, Email, Level, DateCreated, Password) values ( '$UName', '$UFName', '$UMNum', '$UEMail', '$UType', '" . date("Y-m-d H:i:s") . "', '" . $NewPass . "' );" ) or die ("Problems");
 
 	} else {
 
-		$UserWrite = mysql_query("UPDATE users SET UserName='$UName',FullName='$UFName',MobilePhone='$UMNum',Email='$UEMail',Level='$UType' WHERE id='$Uid'");
+		$UserWrite = mysqli_query("UPDATE users SET UserName='$UName',FullName='$UFName',MobilePhone='$UMNum',Email='$UEMail',Level='$UType' WHERE id='$Uid'");
 
 	}
 
 	header( "Location: index.php?option=users" );
-	mysql_close();
+	/* mysql_close(); */
 
 
 } else if ( $action == 'logout' ) {
-
-	$_SESSION['username'] = "Guest";
+  
+	$_SESSION['username']='Guest';
 	session_start();
 	session_unset();
 	session_destroy();
@@ -243,6 +252,12 @@ if ( $action == 'login' ){
 
 }
 
-
-
+echo "\t\t\t<tr bgcolor='#6f98b7' style='padding: 5px; border: #183c8f 2px solid;'>\n";
+echo "\t\t\t\t<td colspan='3' style='padding: 5px; border: #183c8f 2px solid;'>\n";
+echo "\t\t\t\t\t<center>This site was hand rolled by Dave le Roux using a blend of four Open Source languages, updates done by Sakhile Sibuyi </center>\n";
+echo "\t\t\t\t</td>\n";
+echo "\t\t\t</tr>\n";
+echo "\t\t</table>\n";
+echo "\t</body>\n";
+echo "</html>";
 ?>

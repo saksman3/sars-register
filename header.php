@@ -51,14 +51,28 @@
 								<a class='dropdown-item' href='#'>Something else here</a>
 								</div>
 						   </li>
+						   <a href='index.php?option=sms' class='nav-item nav-link'>SMS Despatcher</a>
+						   <a href='index.php?option=servers&sort=IPAddress' class='nav-item nav-link'>Server Register</a>  
+						   ";
 	
-							<a href='index.php?option=sms' class='nav-item nav-link'>SMS Despatcher</a>
-							<a href='index.php?option=servers&sort=IPAddress' class='nav-item nav-link'>Server Register</a>
-							  <a href='index.php?option=login' class='nav-item nav-link'>Login</a>
-					   </div>
-				  </div>
-			  </nav>
-			</div>	
-		";
+            if($_SESSION['userlevel'] > 3){
+				echo"							
+				<a href='index.php?option=contacts' class='nav-item nav-link'>Server Contacts</a>
+				<a href='index.php?option=users' class='nav-item nav-link'>Register Users</a>
+				<a href='index.php?option=logout' class='nav-item nav-link'>Logout</a>
+				";
+
+			}
+			else{
+				echo"							
+				<a href='index.php?option=login' class='nav-item nav-link'>Login</a>";
+
+			}
+  echo"
+  </div>
+  </div>
+</nav>
+</div>	";
+	
 
 ?>

@@ -1,8 +1,9 @@
 /* default */
 body {
   font-family: sans-serif;
-  background: rgba(0, 0, 0, 0.5);
+  /* background: rgba(0, 0, 0, 0.5); */
   color: white;
+  min-height: 100vh;
 }
 #Header {
   float: left;
@@ -23,15 +24,9 @@ body {
   border: #003477 2px solid;
 }
 
-#Footer {
-  float: left;
-  background: #6f98b7;
-  width: 100%;
-  border: #003477 2px solid;
-  padding-top: 5px;
-  padding-bottom: 5px;
+#footer p {
+  color: #fff;
 }
-
 #Main {
   float: left;
   position: relative;
@@ -39,6 +34,8 @@ body {
   background: #999999;
   border: #003477 2px solid;
   padding: 5px;
+}
+.user-list h1 {
 }
 
 table.hosts {
@@ -61,7 +58,7 @@ th.hosts {
   border-spacing: 2px;
   border-style: solid;
   border-color: #000000;
-  background: #999999;
+  background: #eee;
 }
 
 table.user {
@@ -197,6 +194,10 @@ a:hover {
   font-family: monospace;
 }
 /* my changes */
+.hosts {
+  padding: 10px;
+  margin-top: 10px;
+}
 .links-table {
   width: 100%;
 }
@@ -289,6 +290,8 @@ a:hover {
   position: absolute;
   transform: translate(-50%, -50%);
   padding: 50px;
+  z-index: 2;
+
   background: linear-gradient(
     to right,
     rgba(3, 38, 114, 0.9),
@@ -335,6 +338,42 @@ input[type="password"]:focus {
 }
 .form-wrapper:hover {
   border-top-left-radius: 50px;
-  border-bottom-right-radius: 50px;
+  border-bottom-right-radius: 10%;
   background: rgba(5, 58, 128, 0.6);
+  transform: scale(1.2);
+}
+.navbar-toggler-icon {
+  border-color: #fff !important;
+}
+.bg-info {
+  color: #fff;
+}
+.hosts-list {
+  margin-top: 20px !important;
+}
+.edit-hosts {
+  margin-top: 40px !important;
+}
+.edit-hosts table {
+  transition: 0.4s all ease-in-out !important;
+}
+td input[type="text"],
+select {
+  height: 30px;
+  border-radius: 5px;
+  transition: 0.4s all ease-in-out !important;
+  width: 200px;
+}
+td input:focus {
+  border: 2px solid skyblue;
+  box-shadow: 2px 2px 2px 3px #777;
+}
+td input[type="submit"] {
+  width: 200px;
+}
+.edit-user {
+  margin-top: 20px;
+}
+.user-list {
+  margin-top: 20px;
 }
