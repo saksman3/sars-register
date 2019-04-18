@@ -14,7 +14,7 @@ class hosts
 	   include("EditHosts.php");
 	}
 
-	function HostSave( $HostIP,$HostName, $SysOwn, $Location, $OS, $SysEnv, $Status, $RemCons, $SNMP, $HostID, $DateCreated, $SNMPPort, $Decomm, $Register, $Ping ) {
+	function HostSave( $HostIP,$SysOwn, $Location, $OS, $SysEnv, $Status, $RemCons, $SNMP, $HostID, $DateCreated, $SNMPPort, $Decomm, $Register, $Ping ) {
 
 /* 		include("config.php");
 		mysql_connect( $dbhost,$dbuser,$dbpasswd ) or die ("MySQL connect failed");
@@ -40,7 +40,7 @@ class hosts
 
 			} else {
 
-				$query = "insert into hosts (IPAddress,HostName, SysOwner, SysLocation, OS, SysEnvironment, Status, SysRemConsole, SysSNMP, DateCreated, SNMPPort, Decomm, Register, scan, ping ) values ( '$HostIP','$HostName','$SysOwn', '$Location', '$OS', '$SysEnv', '$Status', '$RemCons', '$SNMP', NOW(), $SNMPPort, $Decomm, $Register, '0', $Ping )";
+				$query = "insert into hosts (IPAddress, SysOwner, SysLocation, OS, SysEnvironment, Status, SysRemConsole, SysSNMP, DateCreated, SNMPPort, Decomm, Register, scan, ping ) values ( '$HostIP','$SysOwn', '$Location', '$OS', '$SysEnv', '$Status', '$RemCons', '$SNMP', NOW(), $SNMPPort, $Decomm, $Register, '0', $Ping )";
 				$HostRec=$GLOBALS['conn']->query($query) or die("error inserting data to db");
 			}
 
@@ -53,7 +53,7 @@ class hosts
 			$result = $GLOBALS['conn']->query($query);
 			$OwnerRec = $result->fetch_assoc();
 
-			$HostRec = mysqli_query($GLOBALS['conn'],"UPDATE hosts SET IPAddress='$HostIP',HostName='$HostName',SysOwner=$SysOwn,SysLocation=$Location,OS=$OS,SysEnvironment='$SysEnv',Status='$Status',SysRemConsole='$RemCons',SysSNMP='$SNMP',SNMPPort='$SNMPPort',Decomm='$Decomm',Register='$Register',ping=$Ping WHERE id='$HostID'");
+			$HostRec = mysqli_query($GLOBALS['conn'],"UPDATE hosts SET IPAddress='$HostIP',SysOwner=$SysOwn,SysLocation=$Location,OS=$OS,SysEnvironment='$SysEnv',Status='$Status',SysRemConsole='$RemCons',SysSNMP='$SNMP',SNMPPort='$SNMPPort',Decomm='$Decomm',Register='$Register',ping=$Ping WHERE id='$HostID'");
 
 			
 

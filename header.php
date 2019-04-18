@@ -3,7 +3,7 @@
 		<html>
 		<head>
 			<title>$TitleString</title>
-			<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+			<link rel='stylesheet' href='styles/bootstrap.css'>
 			<link href='styles/styles.css' rel='stylesheet' type='text/css'>
 					<script language='javascript' type='text/javascript'>
 						function limitText(limitField, limitCount, limitNum) {
@@ -14,9 +14,9 @@
 						}
 						}
 					</script>
-						<script src='https://code.jquery.com/jquery-3.3.1.slim.min.js'></script>
-						<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js'></script>
-						<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
+						<script src='js/popper.js'></script>
+						<script src='js/jquery.js'></script>
+						<script src='js/bootstrap.js'></script>
 		</head>
 		<body>
 			<div class='navigation'>
@@ -51,7 +51,7 @@
 								<a class='dropdown-item' href='#'>Something else here</a>
 								</div>
 						   </li>
-						   <a href='index.php?option=sms' class='nav-item nav-link'>SMS Despatcher</a>
+						   
 						   <a href='index.php?option=servers&sort=IPAddress' class='nav-item nav-link'>Server Register</a>  
 						   ";
 	

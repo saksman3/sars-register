@@ -226,8 +226,8 @@ a:hover {
   font-size: 60px;
 }
 .welcome-title p {
-  animation: loadedP 10s alternate infinite;
-  animation-delay: 3s;
+  animation: loadedP 3s both;
+  animation-delay: 2s;
   font-size: 30px;
 }
 @keyframes loaded {
@@ -243,11 +243,11 @@ a:hover {
 @keyframes loadedP {
   0% {
     opacity: 0;
-    /* transform: translateY(100%); */
+     transform: translateY(-100%); 
   }
   100% {
     opacity: 1;
-    /*  transform: translateY(0); */
+      transform: translateY(0); 
   }
 }
 .welcome-title p {
@@ -336,12 +336,12 @@ input[type="password"]:focus {
   box-shadow: 3px 3px 3px 4px #464646;
   transition: 0.4s all ease-in-out;
 }
-.form-wrapper:hover {
+/* .form-wrapper:hover {
   border-top-left-radius: 50px;
   border-bottom-right-radius: 10%;
   background: rgba(5, 58, 128, 0.6);
   transform: scale(1.2);
-}
+} */
 .navbar-toggler-icon {
   border-color: #fff !important;
 }
@@ -377,3 +377,8 @@ td input[type="submit"] {
 .user-list {
   margin-top: 20px;
 }
+.message {
+  text-shadow: none;
+  font-weight: 600;
+  color: rgb(248, 8, 8);
+  padding: 10px;

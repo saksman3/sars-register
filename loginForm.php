@@ -1,14 +1,15 @@
 <?php
 
-  if ( $_SESSION['failed'] ) {
-     echo"<p>Your login attempt failed, please try again.</p>";
-  }
+
    echo"
    <form id='form1' name='form1' method='post' action='$_SERVER[PHP_SELF]' class='text-center'>
    <div class='form-wrapper'>
-   <h1 >Login page</h1>
-   
-   <div class='form-group'>
+   <h1 >Login page</h1>";
+   if ( $_SESSION['failed'] ) {
+      echo"<p class=' message'>Your login attempt failed, please try again.</p>";
+      $_SESSION['failed']='';
+   }
+   echo"<div class='form-group'>
    <input name='username' type='text' id='username' class='form-control' placeholder='Username'/>
    </div>
    

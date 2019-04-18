@@ -2,7 +2,7 @@
 
 <?php
     echo"
-    <div class='container hosts-list'>
+    <div class='container-fluid hosts-list'>
     <div class='info-table text-center'>
     <h1 class=''>SARS Server Register</h1>";
     if($_SESSION['userlevel'] > 2){

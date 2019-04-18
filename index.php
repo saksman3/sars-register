@@ -222,19 +222,19 @@ if ( $action == 'login' ){
 			}
 		} else {
 
-			echo "<form action='index.php?option=users' method=post><center><p>The passwords do not seem to match.</p><center>\n";
-			echo "<center><input type='submit' value='Continue'></center></form>";
+			echo "<form action='index.php?option=users' method=post class='my-5'><center><p class='my-3 text-danger'>The passwords do not seem to match.</p><center>\n";
+			echo "<center><input type='submit' value='Continue' class=' btn btn-primary'></center></form>";
 			return;
 		}
 	}
 
 	if ( $Uid == '0' ) {
 
-		$UserWrite = mysqli_query("insert into users (UserName, FullName, MobilePhone, Email, Level, DateCreated, Password) values ( '$UName', '$UFName', '$UMNum', '$UEMail', '$UType', '" . date("Y-m-d H:i:s") . "', '" . $NewPass . "' );" ) or die ("Problems");
-
+		$UserWrite = mysqli_query($GLOBALS['conn'],"insert into users (UserName, FullName, MobilePhone, Email, Level, DateCreated, Password) values ( '$UName', '$UFName', '$UMNum', '$UEMail', '$UType', '" . date("Y-m-d H:i:s") . "', '" . $NewPass . "' );" ) or die ("Problems");
+        
 	} else {
 
-		$UserWrite = mysqli_query("UPDATE users SET UserName='$UName',FullName='$UFName',MobilePhone='$UMNum',Email='$UEMail',Level='$UType' WHERE id='$Uid'");
+		$UserWrite = mysqli_query($GLOBALS['conn'],"UPDATE users SET UserName='$UName',FullName='$UFName',MobilePhone='$UMNum',Email='$UEMail',Level='$UType' WHERE id='$Uid'");
 
 	}
 
@@ -254,7 +254,7 @@ if ( $action == 'login' ){
 
 echo "\t\t\t<tr bgcolor='#6f98b7' style='padding: 5px; border: #183c8f 2px solid;'>\n";
 echo "\t\t\t\t<td colspan='3' style='padding: 5px; border: #183c8f 2px solid;'>\n";
-echo "\t\t\t\t\t<center>This site was hand rolled by Dave le Roux using a blend of four Open Source languages, updates done by Sakhile Sibuyi </center>\n";
+
 echo "\t\t\t\t</td>\n";
 echo "\t\t\t</tr>\n";
 echo "\t\t</table>\n";
